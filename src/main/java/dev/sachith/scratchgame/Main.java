@@ -1,6 +1,10 @@
 package dev.sachith.scratchgame;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sachith.scratchgame.domain.vo.Result;
+import dev.sachith.scratchgame.domain.vo.config.GameConfigData;
+import dev.sachith.scratchgame.engine.GameEngine;
+import dev.sachith.scratchgame.engine.MatrixBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,9 +43,9 @@ public class Main {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            GameConfig config = objectMapper.readValue(new File(configPath), GameConfig.class);
-            GameEngine gameEngine = new GameEngine(config, bettingAmount);
-            Result result = gameEngine.play();
+            GameConfigData config = objectMapper.readValue(new File(configPath), GameConfigData.class);
+            GameEngine gameEngine = new GameEngine(config, new MatrixBuilder(config));
+            Result result = gameEngine.play(bettingAmount);
 
             objectMapper.writeValue(new File("output.json"), result);
             System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));

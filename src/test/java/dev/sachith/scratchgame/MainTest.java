@@ -1,10 +1,13 @@
 package dev.sachith.scratchgame;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sachith.scratchgame.domain.vo.Result;
+import dev.sachith.scratchgame.domain.vo.config.GameConfigData;
+import dev.sachith.scratchgame.engine.GameEngine;
+import dev.sachith.scratchgame.engine.MatrixBuilder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,19 +33,21 @@ class MainTest {
 
             ObjectMapper objectMapper = new ObjectMapper();
 
-            GameConfig config = objectMapper.readValue(input, GameConfig.class);
-            GameEngine gameEngine = new GameEngine(config, bettingAmount);
-            Result result = gameEngine.play();
+            GameConfigData config = objectMapper.readValue(input, GameConfigData.class);
+
+            GameEngine gameEngine = new GameEngine(config, new MatrixBuilder(config));
+            Result result = gameEngine.play(bettingAmount);
 
             assertNotNull(result, "Result should not be null");
-            assertTrue(result.reward() >= 0, "Winning amount should be non-negative");
+            assertTrue(result.getReward() >= 0, "Winning amount should be non-negative");
 
-            objectMapper.writeValue(new File("output_" + configPath), result);
             System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
 
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error loading configuration file.");
         }
+
     }
+
 }
