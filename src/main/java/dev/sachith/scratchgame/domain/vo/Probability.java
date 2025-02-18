@@ -1,6 +1,8 @@
-package dev.sachith.scratchgame;
+package dev.sachith.scratchgame.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dev.sachith.scratchgame.domain.vo.probability.BonusSymbolProbability;
+import dev.sachith.scratchgame.domain.vo.probability.StandardSymbolProbability;
 
 import java.util.List;
 

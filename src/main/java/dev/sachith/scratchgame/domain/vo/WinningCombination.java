@@ -1,4 +1,4 @@
-package dev.sachith.scratchgame;
+package dev.sachith.scratchgame.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,5 +17,6 @@ public record WinningCombination(
         String group,
         @JsonProperty("covered_areas")
         List<List<String>> coveredAreas
+
 ) {
 }
