@@ -16,7 +16,7 @@ checks for winning combinations based on predefined rules.
 
 ## Requirements
 
-- Java 11 or higher
+- Java 17 or higher
 - Maven 3.6.0 or higher
 
 ## Installation
